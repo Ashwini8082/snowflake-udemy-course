@@ -12,17 +12,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          home_dir=$(pwd)
-          echo $home_dir
-          echo -----------------------------------------------------------------------
-          pip install --upgrade pip    
-          echo -----------------------------------------------------------------------
+
+      - name: Install dependencies and run script
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "---------------------------------------------"
+          pip install --upgrade pip
           pip install "snowflake-snowpark-python[pandas]"
-          echo -----------------------------------------------------------------------
+          echo "---------------------------------------------"
           ls -la
-          pwd
-          echo ----------------------------------------------------------------------- 
-          python $home_dir/ingest-api-data.py
+          echo "---------------------------------------------"
+          python ingest-api-data.py
+
 
 
