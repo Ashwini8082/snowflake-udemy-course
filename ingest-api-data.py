@@ -5,9 +5,16 @@ from snowflake.snowpark import Session
 import sys
 import pytz
 import logging
+import os  # Added to get environment variables
 
 # initiate logging at info level
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
+
+# Get API key from environment variable 'api_key'
+api_key = os.getenv('api_key')
+if not api_key:
+    logging.error("API key not found in environment variable 'api_key'. Exiting.")
+    sys.exit(1)
 
 # Set the IST time zone
 ist_timezone = pytz.timezone('Asia/Kolkata')
@@ -23,7 +30,7 @@ file_name = f'air_quality_data_{timestamp}.json'
 
 today_string = current_time_ist.strftime('%Y_%m_%d')
 
-# Following credential has to come using secret whie running in automated way
+# Following credential has to come using secret while running in automated way
 def snowpark_basic_auth() -> Session:
     connection_parameters = {
        "ACCOUNT":"RH68905",
@@ -44,7 +51,8 @@ def get_air_quality_data(api_key, limit):
     
     # Parameters for the API request
     params = {
-        'api-key': api_key,
+        'api-key': "579b464db66ec23bdd0000010021621c9875412446877bec297ea67f" ,
+
         'format': 'json',
         'limit': limit
     }
@@ -96,17 +104,13 @@ def get_air_quality_data(api_key, limit):
             # Print an error message if the request was unsuccessful
             logging.error(f"Error: {response.status_code} - {response.text}")
             sys.exit(1)
-            #return None
 
     except Exception as e:
         # Handle exceptions, if any
         logging.error(f"An error occurred: {e}")
         sys.exit(1)
-        #return None
-    #if comes to this line.. it will return nothing
-    return None
 
-# Replace 'YOUR_API_KEY' with your actual API key
+    return None
 
 
 limit_value = 4000
