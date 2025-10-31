@@ -6,22 +6,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      api_key: '579b464db66ec23bdd0000010021621c9875412446877bec297ea67f'
+
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Python and install dependencies
-        run: |
+      - run: |
           home_dir=$(pwd)
           echo $home_dir
           echo -----------------------------------------------------------------------
-          pip install --upgrade pip
+          pip install --upgrade pip    
           echo -----------------------------------------------------------------------
           pip install "snowflake-snowpark-python[pandas]"
           echo -----------------------------------------------------------------------
           ls -la
           pwd
-          echo -----------------------------------------------------------------------
+          echo ----------------------------------------------------------------------- 
           python $home_dir/ingest-api-data.py
-        env:
-          api_key: ${{ secrets.API_KEY }}
+
 
