@@ -1,7 +1,7 @@
-name: india_air_quality_json  # root key
+name: india_air_quality_json
 
 on:
-  workflow_dispatch:  # triggers manually
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,3 +24,4 @@ jobs:
           python $home_dir/ingest-api-data.py
         env:
           api_key: ${{ secrets.API_KEY }}
+
